@@ -46,7 +46,7 @@ Entity = Entity
 
 
 -- Displays a marker under nearby players when they are talking
-Cfg.displayOnTalk = { true, 20.0 }, -- state, range
+Cfg.displayOnTalk = { true, 20.0 } -- state, range
 
 if GetConvar('voice_useNativeAudio', 'false') == 'true' then
 	-- native audio distance seems to be larger then regular gta units
