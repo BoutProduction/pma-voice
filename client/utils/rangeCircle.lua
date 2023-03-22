@@ -1,7 +1,8 @@
+-- Range Circle
 AddEventHandler('pma-voice:setTalkingMode', function(mode)
     local distance = Cfg.voiceModes[mode]
     DrawVoiceDistanceMarker(distance[1], distance[3], 150)
-    ShowNotification(string.format('New Range: ~h~%s', distance[2] .. ' ('  .. distance[1]*2 .. 'm)')
+    Cfg.notifyEvent(string.format('New Range: ~h~%s', distance[2] .. ' ('  .. distance[1]*2 .. 'm)')
 end)
 
 
@@ -16,30 +17,24 @@ function DrawVoiceDistanceMarker(distance, color, alpha)
     end
 end
 
-function ShowNotification(text)
-    SetNotificationTextEntry('STRING')
-    AddTextComponentString(text)
-    DrawNotification(false, true)
-end
 
 
+-- Talking Circle
 CreateThread(function()
     local state = Cfg.displayOnTalk
-    while Wait(1) do
-        if not state[1] then break
-        else
-            local pPed = PlayerPedId()
-            local pPos = GetEntityCoords(pPed)
-            local isTalking = NetworkIsPlayerTalking(PlayerId())
+    while state[1] do
+        Wait(1)
+        local pPed = PlayerPedId()
+        local pPos = GetEntityCoords(pPed)
+        local isTalking = NetworkIsPlayerTalking(PlayerId())
 
-            if isTalking then
-                for _, v in ipairs(GetActivePlayers()) do
-                    if v ~= PlayerId() then
-                        local tPed = GetPlayerPed(v)
-                        local tPos = GetEntityCoords(tPed)
-                        if Vdist(pPos, tPos) < state[2] then
-                            DrawMarker(25, tPos.x, tPos.y, tPos.z - 0.950, 0, 0, 0, 0, 0, 0, 0.75, 0.75, 0.0, 52, 204, 255, 55, false, true, 2, false, nil, nil, false)
-                        end
+        if isTalking then
+            for _, v in ipairs(GetActivePlayers()) do
+                if v == PlayerId() then
+                    local tPed = GetPlayerPed(v)
+                    local tPos = GetEntityCoords(tPed)
+                    if Vdist(pPos, tPos) < state[2] then
+                        DrawMarker(25, tPos.x, tPos.y, tPos.z - 0.950, 0, 0, 0, 0, 0, 0, 0.75, 0.75, 0.0, state[3][1], state[3][2], state[3][3], 55, false, true, 2, false, nil, nil, false)
                     end
                 end
             end
