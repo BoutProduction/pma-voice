@@ -46,7 +46,7 @@ Entity = Entity
 
 
 -- Displays a marker under nearby players when they are talking
-Cfg.displayOnTalk = {true, 20.0, {52, 204, 255}} -- state, range
+Cfg.displayOnTalk = {true, 20.0, {52, 204, 255}} -- state, range, color
 
 Cfg.notifyEvent = function(text)
     SetNotificationTextEntry('STRING')
