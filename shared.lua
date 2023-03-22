@@ -46,7 +46,13 @@ Entity = Entity
 
 
 -- Displays a marker under nearby players when they are talking
-Cfg.displayOnTalk = { true, 20.0 } -- state, range
+Cfg.displayOnTalk = {true, 20.0, {52, 204, 255}} -- state, range
+
+Cfg.notifyEvent = function(text)
+    SetNotificationTextEntry('STRING')
+    AddTextComponentString(text)
+    DrawNotification(false, true)
+end
 
 if GetConvar('voice_useNativeAudio', 'false') == 'true' then
     -- native audio distance seems to be larger then regular gta units
