@@ -30,7 +30,7 @@ while state[1] do
 
     if isTalking then
         for _, v in ipairs(GetActivePlayers()) do
-            if v == PlayerId() then
+            if v ~= PlayerId() then
                 local tPed = GetPlayerPed(v)
                 local tPos = GetEntityCoords(tPed)
                 local tVeh = GetVehiclePedIsIn(tPed, false)
