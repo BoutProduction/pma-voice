@@ -21,20 +21,27 @@ end
 
 -- Talking Circle
 CreateThread(function()
-    local state = Cfg.displayOnTalk
-    while state[1] do
-        Wait(1)
-        local pPed = PlayerPedId()
-        local pPos = GetEntityCoords(pPed)
-        local isTalking = NetworkIsPlayerTalking(PlayerId())
+local state = Cfg.displayOnTalk
+while state[1] do
+    Wait(1)
+    local pPed = PlayerPedId()
+    local pPos = GetEntityCoords(pPed)
+    local isTalking = NetworkIsPlayerTalking(PlayerId())
 
-        if isTalking then
-            for _, v in ipairs(GetActivePlayers()) do
-                if v == PlayerId() then
-                    local tPed = GetPlayerPed(v)
-                    local tPos = GetEntityCoords(tPed)
-                    if Vdist(pPos, tPos) < state[2] then
+    if isTalking then
+        for _, v in ipairs(GetActivePlayers()) do
+            if v == PlayerId() then
+                local tPed = GetPlayerPed(v)
+                local tPos = GetEntityCoords(tPed)
+                local tVeh = GetVehiclePedIsIn(tPed, false)
+                if Vdist(pPos, tPos) < state[2] then
+                    if DoesEntityExist(tVeh) and IsPedInAnyVehicle(tPed, false) then
+                        local boneIndex = GetPedBoneIndex(tPed, 0x796e)
+                        local boneCoords = GetPedBoneCoords(tPed, boneIndex)
+                        DrawMarker(20, boneCoords.x, boneCoords.y, boneCoords.z + 1.25, 0.0, 0.0, 0.0, 0.0, -180.0, 0.0, 0.35, 0.35, 0.35, state[3][1], state[3][2], state[3][3], 55, false, true, 2, false, nil, nil, false)
+                    else
                         DrawMarker(25, tPos.x, tPos.y, tPos.z - 0.950, 0, 0, 0, 0, 0, 0, 0.75, 0.75, 0.0, state[3][1], state[3][2], state[3][3], 55, false, true, 2, false, nil, nil, false)
+                        end
                     end
                 end
             end
