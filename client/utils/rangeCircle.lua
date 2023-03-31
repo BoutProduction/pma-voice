@@ -38,7 +38,11 @@ while state[1] do
                     if DoesEntityExist(tVeh) and IsPedInAnyVehicle(tPed, false) then
                         local boneIndex = GetPedBoneIndex(tPed, 0x796e)
                         local boneCoords = GetPedBoneCoords(tPed, boneIndex)
-                        DrawMarker(20, boneCoords.x, boneCoords.y, boneCoords.z + 1.25, 0.0, 0.0, 0.0, 0.0, -180.0, 0.0, 0.35, 0.35, 0.35, state[3][1], state[3][2], state[3][3], 55, false, true, 2, false, nil, nil, false)
+                        if GetVehicleClass(tVeh) == 15 or GetVehicleClass(tVeh) == 16 then
+                            DrawMarker(20, boneCoords.x, boneCoords.y, boneCoords.z+1.75, 0.0, 0.0, 0.0, 0.0, -180.0, 0.0, 0.35, 0.35, 0.35, state[3][1], state[3][2], state[3][3], 55, false, true, 2, false, nil, nil, false)
+                        else
+                            DrawMarker(20, boneCoords.x, boneCoords.y, boneCoords.z+1.25, 0.0, 0.0, 0.0, 0.0, -180.0, 0.0, 0.35, 0.35, 0.35, state[3][1], state[3][2], state[3][3], 55, false, true, 2, false, nil, nil, false)
+                        end
                     else
                         DrawMarker(25, tPos.x, tPos.y, tPos.z - 0.950, 0, 0, 0, 0, 0, 0, 0.75, 0.75, 0.0, state[3][1], state[3][2], state[3][3], 55, false, true, 2, false, nil, nil, false)
                         end
